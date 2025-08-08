@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Abertura</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: black;
+      font-family: 'Press Start 2P', monospace;
+    }
+
+    .video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 10;
+      color: white;
+      font-size: 12px;
+      text-shadow: 2px 2px 4px black;
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+    }
+
+    .audio-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 20;
+      padding: 10px 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: 2px solid white;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Vídeo de fundo -->
+  <div class="video-container">
+    <video autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4">
+     
+    </video>
+  </div>
+
+  <!-- Áudio -->
+  <audio id="bg-music" src="audio.mp3" loop></audio>
+
+  <!-- Cursor personalizado -->
+  <div class="custom-cursor" id="customCursor">CLIQUE PARA ACESSAR</div>
+
+  <!-- Botão para ligar/desligar música -->
+  <div class="audio-toggle" id="toggleMusic">LIGAR MÚSICA</div>
+
+  <script>
+    const audio = document.getElementById('bg-music');
+    const cursor = document.getElementById('customCursor');
+    const toggleBtn = document.getElementById('toggleMusic');
+
+    let musicPlaying = false;
+
+    // Cursor segue o mouse
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Alterna a música ao clicar no botão
+    toggleBtn.addEventListener('click', async () => {
+      try {
+        if (!musicPlaying) {
+          await audio.play();
+          musicPlaying = true;
+          toggleBtn.textContent = "LIGAR MÚSICA";
+        } else {
+          audio.pause();
+          musicPlaying = false;
+          toggleBtn.textContent = "DESLIGAR MÚSICA";
+        }
+      } catch (error) {
+        console.error('Erro ao controlar a música:', error);
+        alert('Erro ao iniciar o áudio. Tente clicar novamente.');
+      }
+    });
+       
+    document.addEventListener('click', (e) => {
+     
+      if (e.target.closest('#toggleMusic')) return;
+
+
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>
