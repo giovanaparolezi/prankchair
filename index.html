@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Abertura</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     * {
@@ -58,10 +59,31 @@
       font-size: 10px;
       cursor: pointer;
       text-align: center;
+      border-radius: 5px;
     }
 
     audio {
       display: none;
+    }
+
+    /* Estilos para telas pequenas */
+    @media (max-width: 768px) {
+      .audio-toggle {
+        padding: 15px 25px;
+        font-size: 14px;
+        bottom: 30px;
+        right: 30px;
+      }
+    }
+
+    /* Estilos para telas muito pequenas */
+    @media (max-width: 480px) {
+      .audio-toggle {
+        padding: 20px 30px;
+        font-size: 16px;
+        bottom: 40px;
+        right: 40px;
+      }
     }
   </style>
 </head>
@@ -71,7 +93,6 @@
   <div class="video-container">
     <video autoplay muted loop playsinline>
       <source src="video.mp4" type="video/mp4">
-     
     </video>
   </div>
 
@@ -103,11 +124,11 @@
         if (!musicPlaying) {
           await audio.play();
           musicPlaying = true;
-          toggleBtn.textContent = "LIGAR MÚSICA";
+          toggleBtn.textContent = "DESLIGAR MÚSICA";
         } else {
           audio.pause();
           musicPlaying = false;
-          toggleBtn.textContent = "DESLIGAR MÚSICA";
+          toggleBtn.textContent = "LIGAR MÚSICA";
         }
       } catch (error) {
         console.error('Erro ao controlar a música:', error);
@@ -116,10 +137,7 @@
     });
        
     document.addEventListener('click', (e) => {
-     
       if (e.target.closest('#toggleMusic')) return;
-
-
 
       setTimeout(() => {
         window.location.href = "page.html";
